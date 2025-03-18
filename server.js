@@ -1,13 +1,8 @@
-// Importing Express framework
 const express = require("express");
-
-// Creating an Express application
 const app = express();
+const PORT = process.env.PORT || 3003; // Use process.env.PORT for Render deployment
 
-// Defining the port number for the server
-const PORT = 3003;
-
-// Array of Cristiano Ronaldo's quotes
+// Ronaldo Quotes
 const quotes = [
     "Your love makes me strong, your hate makes me unstoppable.",
     "I don’t have to show anything to anyone. There is nothing to prove.",
@@ -18,20 +13,21 @@ const quotes = [
     "I never tried to hide the fact that my only goal is to be the best."
 ];
 
-// Serve static files from the "public" directory
+// Serve static files from 'public' folder
 app.use(express.static("public"));
 
-// API endpoint to get a random Ronaldo quote
+// API Route to get a random quote
 app.get("/api/quote", (req, res) => {
-    // Selecting a random quote from the array
     const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-    
-    // Sending the random quote as a JSON response
     res.json({ quote: randomQuote });
 });
 
-// Start the server and listen on the specified port
+// Homepage Route
+app.get("/", (req, res) => {
+    res.send("Welcome to Ronaldo Quotes API! Go to /api/quote to get a quote.");
+});
+
+// Start Server
 app.listen(PORT, () => {
-    // Fix: Corrected template literal syntax
-    console.log(`🚀 Server running at http://localhost:${PORT}`);
+    console.log(`Server running at http://localhost:${PORT}`);
 });
